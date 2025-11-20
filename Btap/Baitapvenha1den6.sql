@@ -1,7 +1,7 @@
 -- Tao database
-DROP DATABASE IF EXISTS Testing_System ;
-CREATE DATABASE Testing_System ;
-USE Testing_System;
+DROP DATABASE IF EXISTS TestingSystem ;
+CREATE DATABASE TestingSystem ;
+USE TestingSystem;
 
 -- 1. Tao bang Department
 DROP TABLE IF EXISTS Department;
@@ -245,90 +245,29 @@ VALUES
     (1, 9), 
     (1, 8);
     
--- Lay tat ca danh sach Account dang co tren he thong
-SELECT * FROM Account;
-
--- lay ra tat ca danh sach Account hien thi thong tin AccountID , Email , FullName
-SELECT AccountID , Email , FullName FROM Account;
--- lay ra tat ca danh sach Account hien thi thong tin FullName
-SELECT DISTINCT(FullName) FROM Account;
-
--- lay ra tat ca danh sach Department ma thuoc ve phong ban so 1 (DepartmentID = 1)
-SELECT * FROM Account
-WHERE DepartmentID = 1;
-
--- lay ra tat ca danh sach Account ma  (DepartmentID = 2 hoac 3 haocj 7)
-SELECT * FROM Account
-WHERE DepartmentID = 2 OR DepartmentID = 3 OR DepartmentID = 7  ;
-SELECT * FROM Account WHERE DepartmentID IN (2, 3, 7);
-
--- lay ra tat ca danh sach Account ma khong thuoc DepartmentID = 2 hoac 3 hoac 7
-SELECT * FROM Account WHERE DepartmentID NOT IN (2, 3, 7);
--- lay ra tat ca danh sach Account ma khong thuoc DepartmentID = tu 1 den 6 
-SELECT * FROM Account WHERE DepartmentID BETWEEN 1 AND 6 ;
--- lay ra tat ca danh sach Account o CreateDate ma trong rong , ko du lieu 
-SELECT * FROM Account WHERE CreateDate IS NULL ; 
--- lay ra tat ca danh sach Account o CreateDate ma ngay tao lon hon ngay naof do
-SELECT * FROM Account WHERE CreateDate > '2025-11-17 00:00:00';
-
--- lay ra tat ca cac ban ghi trong bang Account , ma co FullName bat dau bang chu " N " 
-SELECT * FROM Account WHERE FullName Like N'N%';
-
--- lay ra tat ca cac ban ghi trong bang Account , ma co FullName chu thu 2 la chu " u "
-SELECT * FROM Account WHERE FullName Like '_u%';
-
--- hay dem so ban ghi trong bang Account 
-SELECT COUNT(*) FROM Account ;
-SELECT COUNT(CreateDate) FROM Account;
-
--- do dai ky tu 
-SELECT length('TranTrung');
-
--- viet thuong
-SELECT lower('TranDuyTrung');
-
--- Viet Hoa
-SELECT upper('TranDuyTrung');
-
--- return tgiaan hien tai cua he thong
-SELECT now();
 
 
 
-DROP TABLE IF EXISTS Student;
-CREATE TABLE `Student`(
-     Id		                    TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	 Student_Name				VARCHAR(50) NOT NULL,
-     Subject_Name		      	VARCHAR(50) NOT NULL,
-     Point_Student				TINYINT
-);
+-- Question 2 : lay ra tat ca phong ban 
+SELECT * FROM Account ;
+
+-- Question 3 : lay ID cua phong ban "Sale"
+SELECT DepartmentID  FROM Department 
+WHERE DepartmentName = 'Sale';
+
+-- Question 4 : lay ra thong tin account có fullname dai nhat
+SELECT * FROM Account 
+WHERE length(FullName) = (SELECT max(length(Fullname)) FROM Account ) ;
+
+-- Question 5 : lay ra thong tin account co fullname dai nhat vaf thuoc phong ban cos ID = 3 
+
+SELECT * FROM Account 
+Where length(FullName) = (SELECT max(length(Fullname)) FROM Account )
+	AND DepartmentID = 3 ;
+    
+-- Question 6 : Lay ra ten group da tao truoc ngay 20-12-2019
+SELECT GroupName FROM `Group`
+WHERE CreateDate < 2019-12-20 ;
 
 
 
-INSERT INTO Student (Student_Name, Subject_Name, Point_Student)
-VALUES				('Name1',	'Sql', 		'7'),
-					('Name2',	'Java', 	'8'),
-                    ('Name3',	'Java', 	'9'),
-                    ('Name4',	'Sql', 		'5'),
-                    ('Name5',	'Java', 	'4'),
-                    ('Name6',	'Spring', 	'5'),
-                    ('Name7',	'Java', 	'8'),
-                    ('Name8',	'Spring', 	'8'),
-					('Name9',	'Sql', 	'5'),
-                    ('Name10',	'Spring', 	'4'),
-                    ('Name11',	'Sql', 	'5'),
-                    ('Name12',	'Spring', 	'8'),
-                    ('Name13',	'Sql', 	'8');
-SELECT * FROM Student;                    
--- ham tinh tong Point_Student 
-SELECT SUM(Point_Student) FROM Student;
-
--- Tim diem lon nhat trong bang diem 
-SELECT max(Point_Student) From Student;
--- Tim diem nho nhat trong bang diem 
-SELECT min(Point_Student) From Student;
--- tim TBC 
-SELECT avg(Point_Student) FROM Student;
--- tim so lon nhat cau mon SQL
-SELECT max(Point_Student) FROM Student 
-Where Subject_Name = 'SQL' ;
