@@ -246,88 +246,38 @@ VALUES
     (1, 8);
     
     
--- Question 1 :  Viết lệnh để lấy ra danh sách nhân viên và thông tin phòng ban của họ
-SELECT * FROM `Account` a 
-INNER JOIN 	Department D	ON 	A.DepartmentID = D.DepartmentID;
 
--- Question 2: Viết lệnh để lấy ra thông tin các account được tạo sau ngày 20/12/2010
-SELECT * FROM `Account`
-WHERE CreateDate < '2020-12-20';
+-- question 1 : tao view co chua danh sach nhan vien thuoc phong ban sale 
+CREATE OR REPLACE VIEW vw AS 
+	SELECT a.AccountID ,a.Username ,a.FullName ,a.DepartmentID , d.DepartmentName FROM account a
+    INNER JOIN department d ON a.departmentID = d.departmentID 
+    Where departmentName = 'Sale';
+    
+SELECT * FROM vw ;
+-- question 2 : Tạo view có chứa thông tin các account tham gia vào nhiều group nhất
 
--- Question 3 Viết lệnh để lấy ra tất cả các developer
-SELECT * FROM `Account` a
-INNER JOIN `Position` p ON p.PositionID = a.PositionID 
-WHERE p.PositionName = 'Dev';
+CREATE OR REPLACE VIEW vw_groupAccount AS
+	WITH cte_maxAccount AS(
+		SELECT count(*) AS Amount FROM groupaccount ga
+		GROUP BY ga.AccountID
+	)
+	SELECT ga.AccountID, a.FullName, COUNT(*) Amount FROM groupaccount ga
+	INNER JOIN account a ON a.AccountID = ga.AccountID
+	GROUP BY ga.AccountID
+	HAVING COUNT(*) = (SELECT max(Amount) FROM cte_maxAccount);
 
--- Question 4: Viết lệnh để lấy ra danh sách các phòng ban có >3 nhân viên
-SELECT D.DepartmentName, count(a.DepartmentID) AS SoLuong  FROM account A
-INNER JOIN Department D ON a.DepartmentID = D.DepartmentID
-GROUP BY A.DepartmentID
-HAVING COUNT(A.DepartmentID) > 3 ;
-
--- Question 5: Viết lệnh để lấy ra danh sách câu hỏi được sử dụng trong đề thi nhiều nhất
-
-WITH cte_cauhoi AS(
-	SELECT count(ex.QuestionID) as Soluong FROM examquestion GROUP BY QuestionID
-)
-SELECT q.QuestionID, q.Content, count(1) FROM examquestion ex
-INNER JOIN question q ON q.QuestionID = ex.QuestionID
-GROUP BY QuestionID HAVING count(QuestionID) = (SELECT max(Soluong) FROM cte_cauhoi);
-
--- Question 6: Thông kê mỗi Category Question được sử dụng trong bao nhiêu Question  
-SELECT q.CategoryID,cq.CategoryName ,COUNT(q.CategoryID) FROM question q 
-INNER JOIN categoryquestion cq ON cq.CategoryID = q.CategoryID
-GROUP BY q.CategoryID;
-
--- Question 7: Thông kê mỗi Question được sử dụng trong bao nhiêu Exam
-SELECT q.QuestionID, q.Content , count(eq.QuestionID) FROM examquestion eq
-RIGHT JOIN question q ON q.QuestionID = eq.QuestionID
-GROUP BY q.QuestionID;
-
--- Question 8 : Lấy ra Question có nhiều câu trả lời nhất
-SELECT a.QuestionID ,COUNT(a.QuestionID) soluongcauhoi FROM Answer a
-INNER JOIN Question q ON q.QuestionID = a.QuestionID 
-GROUP BY a.QuestionID 
-ORDER BY COUNT(a.QuestionID) DESC LIMIT 1 ;
-SELECT * FROM Answer ;
-
--- Question 9: Thống kê số lượng account trong mỗi group
-SELECT GroupID, COUNT(AccountID) AS TotalAccounts FROM GroupAccount
-GROUP BY GroupID;
-
--- Question 10: Tìm chức vụ có ít người nhất 
-SELECT p.PositionID, p.PositionName, Count(a.PositionID) SoNguoi FROM account a
-INNER JOIN Position p ON a.PositionID = p.PositionID 
-GROUP BY a.PositionID
-ORDER BY COUNT(a.PositionID) ASC LIMIT 1 ; 
-
--- Question 11: Thống kê mỗi phòng ban có bao nhiêu dev, test, scrum master, PM
-SELECT a.DepartmentID, p.PositionID, p.PositionName, COUNT(a.PositionID) FROM Account a
-INNER JOIN Position p ON a.PositionID = p.PositionID
-INNER JOIN Department d ON a.DepartmentID = d.DepartmentID
-GROUP BY a.DepartmentID, p.PositionID, p.PositionName 
-ORDER BY a.DepartmentID ASC, p.PositionID ASC;
-
--- Question 12: Lấy thông tin chi tiết của câu hỏi bao gồm: thông tin cơ bản của question, loại câu hỏi, ai là người tạo ra câu hỏi, câu trả lời là gì, ...
-SELECT q.QuestionID , q.Content , q.CreatorID , a.AnswerID ,a.Content FROM Answer a
-INNER JOIN Question q ON a.QuestionID = q.QuestionID ;
-
--- Question 13: Lấy ra số lượng câu hỏi của mỗi loại tự luận hay trắc nghiệm
-SELECT TypeID, COUNT(QuestionID) Soluongcauhoi FROM Question 
-GROUP BY TypeID;
-
-SELECT * FROM Question ;
+-- Question 3 : Tạo view có chứa câu hỏi có những content quá dài (content quá 300 từ được coi là quá dài) và xóa nó đi
+CREATE OR REPLACE VIEW vw_Contentquadai AS
+	SELECT *
+	FROM Question
+	WHERE LENGTH(Content) > 300 ;
+	
+SELECT * FROM vw_Contentquadai;
+DROP VIEW vw_Contentquadai;
 
 
--- Question 14:Lấy ra group không có account nào
-SELECT g.GroupID,g.GroupName FROM `Group` g 
-LEFT JOIN GroupAccount ga ON g.GroupID = ga.GroupID
-WHERE ga.GroupID IS NULL;
-SELECT * FROM GroupAccount ;
 
--- Question 16: Lấy ra question không có answer nào
-SELECT q.QuestionID,q.Content FROM Question q
-LEFT JOIN Answer a ON q.QuestionID = a.QuestionID
-WHERE a.QuestionID IS NULL;
-SELECT * FROM answer ;
+
+
+
 
