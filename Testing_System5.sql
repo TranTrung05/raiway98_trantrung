@@ -275,7 +275,28 @@ CREATE OR REPLACE VIEW vw_Contentquadai AS
 SELECT * FROM vw_Contentquadai;
 DROP VIEW vw_Contentquadai;
 
+-- Question 4: Tạo view có chứa danh sách các phòng ban có nhiều nhân viên nhất
 
+CREATE OR REPLACE VIEW vw_MaxNV AS
+WITH CTE_Count_NV AS(
+SELECT count(A1.DepartmentID) AS countDEP_ID FROM account A1
+GROUP BY A1.DepartmentID)
+
+SELECT D.DepartmentName, count(A.DepartmentID) AS SL 
+FROM account A
+INNER JOIN `department` D ON D.DepartmentID = A.DepartmentID
+GROUP BY A.DepartmentID
+HAVING count(A.DepartmentID) = (SELECT max(countDEP_ID) FROM CTE_Count_NV);
+
+SELECT * FROM account ;
+
+-- Question 5: Tạo view có chứa tất các các câu hỏi do user họ Nguyễn tạo
+WITH cte_Ques5 AS(
+SELECT Q.CategoryID, Q.Content, A.FullName AS Creator FROM question Q
+INNER JOIN `account` A ON A.AccountID = Q.CreatorID 
+WHERE SUBSTRING_INDEX( A.FullName, ' ', 1 ) = 'Nguyễn'
+)
+SELECT * FROM cte_Ques5;
 
 
 
