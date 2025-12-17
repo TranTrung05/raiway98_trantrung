@@ -295,7 +295,7 @@ DELIMITER $$
 			SELECT count(GA.GroupID) INTO var_CountGroupID FROM groupaccount GA
 			WHERE GA.GroupID = NEW.GroupID;
 			IF (var_CountGroupID >5) THEN
-				SIGNAL SQLSTATE '12345'
+				SIGNAL SQLSTATE '45000'
 				SET MESSAGE_TEXT = 'Cant add more User to This Group';
 			END IF;            
     END$$
