@@ -7,5 +7,5 @@ public class Group {
 	public String name;
 	public Account creator;
 	public LocalDate createDate;
-
+	public Account[] accounts;
 }
