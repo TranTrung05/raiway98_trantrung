@@ -1,5 +1,6 @@
 package com.vti.entity;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class Testing_System_2 {
@@ -147,5 +148,207 @@ public class Testing_System_2 {
 			}
 
 		}
+
+		// Question 6
+		System.out.println("----Question 6----");
+		if (account2.groups == null) {
+			System.out.println("Nhom k co thanh vien nao");
+		} else {
+			switch (account2.groups.length) {
+			case 1:
+				System.out.println("Group của nhân viên này là Java Fresher, C# Fresher");
+				break;
+			case 2:
+				System.out.println("Group của nhân viên này là Java Fresher, C# Fresher");
+				break;
+			case 3:
+				System.out.println("Nhân viên này là người quan trọng, tham gia nhiều group");
+				break;
+			case 4:
+				System.out.println("Nhân viên này là người hóng chuyện, tham gia tất cả các group");
+				break;
+			default:
+				System.out.println("Nhân viên này chưa có group");
+				break;
+			}
+		}
+
+		// Question 7
+		System.out.println("----Question 7-----");
+		String positionName = account1.position.name.toString();
+		switch (positionName) {
+		case "Dev":
+			System.out.println("Đây là Developer");
+			break;
+		default:
+			System.out.println("Người này không phải là Developer");
+			break;
+		}
+
+		// Question 8 :In ra thông tin các account bao gồm: Email, FullName và tên phòng
+		// ban của họ
+		System.out.println("-----Question 8-----");
+		Account[] infoacc = { account1, account2, account3 };
+		for (Account account : infoacc) {
+			System.out.println("ID : " + account.id + " , " + "Email : " + account.email + " , " + "Full Name : "
+					+ account.fullname + " , " + "Phong Ban : " + account.department);
+		}
+
+		// Question 9 : In ra thông tin các phòng ban bao gồm: id và name
+		System.out.println("-----Question 9-----");
+		Department[] infoD = { department1, department2, department3 };
+		for (Department department : infoD) {
+			System.out.println("ID : " + department.id + " , " + "Name : " + department.name);
+		}
+
+		// Question 10 :In ra thông tin các account bao gồm: Email, FullName và tên
+		// phòng ban của họ theo định dạng
+		System.out.println("-----Question 10-----");
+		Account[] arrayacc = { account1, account2, account3 };
+		for (int i = 0; i < arrayacc.length; i++) {
+
+			System.out.println("Thong tin account thu " + (i + 1) + ": ");
+			System.out.println("Email : " + arrayacc[i].email);
+			System.out.println("FullName : " + arrayacc[i].fullname);
+			System.out.println("Phong Ban : " + arrayacc[i].department);
+			System.out.println("-------");
+		}
+		// Question 11 In ra thông tin các phòng ban bao gồm: id và name theo định dạng
+		System.out.println("-----Question 11-----");
+		Department[] qs11 = { department1, department2, department3 };
+		for (int i = 0; i < qs11.length; i++) {
+			System.out.println("Thong tin department thu " + (i + 1) + ": ");
+			System.out.println("ID : " + qs11[i].id);
+			System.out.println("Name : " + qs11[i].name);
+			System.out.println("-------");
+		}
+		// question 12 Chỉ in ra thông tin 2 department đầu tiên theo định dạng như
+
+		System.out.println("-----Question 12-----");
+		Account[] qs12 = { account1, account2, account3 };
+		for (int i = 0; i < 2; i++) {
+
+			System.out.println("Thong tin account thu " + (i + 1) + ": ");
+			System.out.println("Email : " + qs12[i].email);
+			System.out.println("FullName : " + qs12[i].fullname);
+			System.out.println("Phong Ban : " + qs12[i].department);
+			System.out.println("-------");
+		}
+
+		// Question 13 : In ra thông tin tất cả các account ngoại trừ account thứ 2
+		System.out.println("-----Question 13-----");
+//		Account[] arrayacc = { account1, account2, account3 };
+		for (int i = 0; i < arrayacc.length; i++) {
+			if (i != 1) {
+				System.out.println("Thong tin account thu " + (i + 1) + ": ");
+				System.out.println("Email : " + arrayacc[i].email);
+				System.out.println("FullName : " + arrayacc[i].fullname);
+				System.out.println("Phong Ban : " + arrayacc[i].department);
+				System.out.println("-------");
+			}
+		}
+
+		// Question 14 In ra thông tin tất cả các account có id < 4
+		System.out.println("-----Question 14-----");
+		Account[] qs14 = { account1, account2, account3 };
+		for (int i = 0; i < qs14.length; i++) {
+			if (qs14[i].id < 4) {
+				System.out.println("Thong tin account thu " + (i + 1) + ": ");
+				System.out.println("Email : " + arrayacc[i].email);
+				System.out.println("FullName : " + arrayacc[i].fullname);
+				System.out.println("Phong Ban : " + arrayacc[i].department);
+				System.out.println("-------");
+			}
+		}
+		// question 15 In ra các số chẵn nhỏ hơn hoặc bằng 20
+		System.out.println("-----Question 15-----");
+		for (int i = 0; i <= 20; i++) {
+			if (i % 2 == 0) {
+				System.out.println(i);
+			}
+		}
+
+		// Question 16 Làm lại các Question ở phần FOR bằng cách sử dụng WHILE kết hợp
+		// với lệnh break, continue
+		System.out.println("------QUESTION 16-------");
+		System.out.println("------question 16 - 10 -------");
+		Account[] reqs10 = { account1, account2, account3 };
+		int i = 0;
+		while (i < reqs10.length) {
+			System.out.println("Thong tin account thu " + (i + 1) + ": ");
+			System.out.println("Email : " + arrayacc[i].email);
+			System.out.println("FullName : " + arrayacc[i].fullname);
+			System.out.println("Phong Ban : " + arrayacc[i].department);
+			System.out.println("-------");
+			i++;
+
+		}
+
+		System.out.println("------QUESTION 16-------");
+		System.out.println("------question 16 - 11 -------");
+		int j = 0;
+		while (j < qs11.length) {
+			System.out.println("Thong tin department thu " + (j + 1) + ": ");
+			System.out.println("ID : " + qs11[j].id);
+			System.out.println("Name : " + qs11[j].name);
+			System.out.println("-------");
+			j++;
+		}
+		System.out.println("------QUESTION 16-------");
+		System.out.println("------question 16 - 12 -------");
+		int x = 0;
+		while (x < qs12.length) {
+			System.out.println("Thong tin account thu " + (x + 1) + ": ");
+			System.out.println("Email : " + qs12[x].email);
+			System.out.println("FullName : " + qs12[x].fullname);
+			System.out.println("Phong Ban : " + qs12[x].department);
+			System.out.println("-------");
+			x++;
+		}
+		// question 17 Làm lại các Question ở phần FOR bằng cách sử dụng DO-WHILE kết
+		// hợp với lệnh break, continue
+		System.out.println("------QUESTION 17-------");
+		System.out.println("------question 17 - 10 -------");
+		i = 0;
+		do {
+			System.out.println("Thong tin account thu " + (i + 1) + ": ");
+			System.out.println("Email : " + reqs10[i].email);
+			System.out.println("FullName : " + reqs10[i].fullname);
+			System.out.println("Phong Ban : " + reqs10[i].department);
+			System.out.println("-------");
+			i++;
+
+		} while (i < reqs10.length);
+		// Exercise 2 (Optional): System out printf
+		// Question 1 Khai báo 1 số nguyên = 5 và sử dụng lệnh System out printf để in
+		// ra số nguyên đó
+		System.out.println("---------EXERCISE 2 -------");
+		System.out.println("---Question 1--- ");
+		int a = 5;
+		System.out.printf("So nguyen la : %d \n", a);
+
+		// Question 2: Khai báo 1 số nguyên = 100 000 000 và sử dụng lệnh System out
+		// printf để in ra số nguyên đó thành định dạng như sau: 100,000,000
+		System.out.println("---Question 2---");
+		int b = 100000000;
+		System.out.printf("So nguyen la : %d \n ", b);
+
+		// question 3 : Khai báo 1 số thực = 5,567098 và sử dụng lệnh System out printf
+		// để in ra số thực đó chỉ bao gồm 4 số đằng sau
+		System.out.println("---Question 3---");
+		Double c = 5.567098;
+		System.out.printf("so ma ta can la : %.4f \n", c);
+
+		// Question 4 :
+		System.out.println("---Question 4---");
+		String qs4_ex2 = "Nguyen Van A";
+		System.out.printf("Toi ten la : %s va toi dang doc than ", qs4_ex2);
+
+		// Question 5
+		System.out.println("-------------Question 5:-------------");
+		String pattern = "dd/MM/yyyy HH:mm:ss";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		String date = simpleDateFormat.format(new Date());
+		System.out.println(date);
 	}
 }
